@@ -1,0 +1,56 @@
+#!/usr/bin/env zsh
+
+local SERVER="localhost:8080"
+local API_URL=$SERVER/tasks
+
+local cmd=$1
+local id=$2
+
+local health_check() {
+	xh GET $SERVER/healthcheck
+}
+
+local list_tasks() {
+	xh GET $API_URL
+}
+
+local create_new_task() {
+	xh POST $API_URL
+}
+
+local get_task() {
+	xh GET $API_URL/$id
+}
+
+local update_task() {
+	xh PUT $API_URL/$id
+}
+
+local delete_task() {
+	xh DELETE $API_URL/$id
+}
+
+
+
+case "$1" in
+	check)
+		health_check
+		;;
+	list|ls)
+		list_tasks
+		;;
+	new|add)
+		create_new_task
+		;;
+	get)
+		get_task
+		;;
+	update|u)
+		update_task
+		;;
+	delete|rm)
+		delete_task
+		;;
+	*)
+		echo "Usage: yata {check|list|ls|new|add|get <id>|update <id>|u <id>|delete <id>|rm <id>}"
+esac
