@@ -5,17 +5,20 @@ import (
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/Amheklerior/yata/server/internal/api"
 )
 
 type Application struct {
 	Logger *log.Logger
 	// TODO: add application data
-	// TODO: add handlers
+	TasksHandler *api.TasksHandler
 }
 
 func NewApplication() (*Application, error) {
 	app := &Application{
-		Logger: log.New(os.Stdout, "", log.Ldate|log.Ltime),
+		Logger:       log.New(os.Stdout, "", log.Ldate|log.Ltime),
+		TasksHandler: api.NewTasksHandler(),
 	}
 
 	return app, nil

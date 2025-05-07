@@ -10,11 +10,11 @@ func SetupRoutes(app *app.Application) *chi.Mux {
 
 	r.Get("/healthcheck", app.HealthCheck)
 
-	// TODO: GET 		/tasks
-	// TODO: POST		/tasks
-	// TODO: GET 		/tasks/{id}
-	// TODO: PUT 		/tasks/{id}
-	// TODO: DELETE	/tasks/{id}
+	r.Get("/tasks", app.TasksHandler.HandleGetTasks)
+	r.Post("/tasks", app.TasksHandler.HandleCreateNewTask)
+	r.Get("/tasks/{id}", app.TasksHandler.HandleGetTaskById)
+	r.Put("/tasks/{id}", app.TasksHandler.HandleUpdateTask)
+	r.Delete("/tasks/{id}", app.TasksHandler.HandleDeleteTask)
 
 	return r
 }
