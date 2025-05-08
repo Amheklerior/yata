@@ -35,9 +35,33 @@ func (th *TasksHandler) HandleGetTasks(w http.ResponseWriter, r *http.Request) {
 }
 
 func (th *TasksHandler) HandleCreateNewTask(w http.ResponseWriter, r *http.Request) {
-	// TODO
-	taskId := 1234
-	fmt.Fprintf(w, "Created a task with id %d\n", taskId)
+	// request body should at least specify the title, optionally the detail, and should not send the id, nor the status
+	var createTaskReq struct {
+		Title  string  `json:"title"`
+		Detail *string `json:"detail"`
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&createTaskReq)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	createdTask, err := th.taskStore.Create(&store.Task{
+		Id:     -1, // ignored
+		Title:  createTaskReq.Title,
+		Detail: *createTaskReq.Detail,
+		Status: "todo",
+	})
+
+	if err != nil {
+		http.Error(w, "Failed to create the task", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(createdTask)
 }
 
 func (th *TasksHandler) HandleGetTaskById(w http.ResponseWriter, r *http.Request) {
