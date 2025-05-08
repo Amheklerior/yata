@@ -5,15 +5,18 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/Amheklerior/yata/server/internal/store"
 	"github.com/go-chi/chi/v5"
 )
 
 // TODO: isolate logic for extracting the task id from the url and converting it
 
-type TasksHandler struct{}
+type TasksHandler struct {
+	taskStore store.TaskStore
+}
 
-func NewTasksHandler() *TasksHandler {
-	return &TasksHandler{}
+func NewTasksHandler(taskStore store.TaskStore) *TasksHandler {
+	return &TasksHandler{taskStore}
 }
 
 func (th *TasksHandler) HandleGetTasks(w http.ResponseWriter, r *http.Request) {

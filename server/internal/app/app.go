@@ -7,18 +7,22 @@ import (
 	"os"
 
 	"github.com/Amheklerior/yata/server/internal/api"
+	"github.com/Amheklerior/yata/server/internal/store"
 )
 
 type Application struct {
-	Logger *log.Logger
-	// TODO: add application data
+	Logger       *log.Logger
 	TasksHandler *api.TasksHandler
 }
 
 func NewApplication() (*Application, error) {
+	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
+	store := store.NewInMemoryTaskStore()
+	handler := api.NewTasksHandler(store)
+
 	app := &Application{
-		Logger:       log.New(os.Stdout, "", log.Ldate|log.Ltime),
-		TasksHandler: api.NewTasksHandler(),
+		Logger:       logger,
+		TasksHandler: handler,
 	}
 
 	return app, nil
