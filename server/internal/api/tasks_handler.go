@@ -108,9 +108,50 @@ func (th *TasksHandler) HandleUpdateTask(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	// TODO
+	// The request body is almost identical to store.Task, but with no id and all fields optional
+	var updateTaskReq struct {
+		Title  *string           `json:"title"`
+		Detail *string           `json:"detail"`
+		Status *store.TaskStatus `json:"status"`
+	}
 
-	fmt.Fprintf(w, "Updated task with id %d\n", taskId)
+	err = json.NewDecoder(r.Body).Decode(&updateTaskReq)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// fetch existing task and integrate changes...
+	existing, err := th.taskStore.GetById(store.TaskId(taskId))
+	if err != nil {
+		http.Error(w, "Could not update the task", http.StatusInternalServerError)
+		return
+	}
+
+	if existing == nil {
+		http.Error(w, fmt.Sprintf("Could not find task with id %v", taskId), http.StatusNotFound)
+		return
+	}
+
+	if updateTaskReq.Title != nil {
+		existing.Title = *updateTaskReq.Title
+	}
+	if updateTaskReq.Detail != nil {
+		existing.Detail = *updateTaskReq.Detail
+	}
+	if updateTaskReq.Status != nil {
+		existing.Status = *updateTaskReq.Status
+	}
+
+	updated, err := th.taskStore.Update(existing)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Failed to update task with id %v", int(taskId)), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(updated)
 }
 
 func (th *TasksHandler) HandleDeleteTask(w http.ResponseWriter, r *http.Request) {
