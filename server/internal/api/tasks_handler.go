@@ -65,16 +65,15 @@ func (th *TasksHandler) HandleCreateNewTask(w http.ResponseWriter, r *http.Reque
 }
 
 func (th *TasksHandler) HandleGetTaskById(w http.ResponseWriter, r *http.Request) {
-	taskIdParam := chi.URLParam(r, "id")
-	if taskIdParam == "" {
-		http.NotFound(w, r)
+	taskIdUrlParam := chi.URLParam(r, "id")
+	if taskIdUrlParam == "" {
+		http.Error(w, "Invalid path! Missing task id", http.StatusBadRequest)
 		return
 	}
 
-	taskId, err := strconv.ParseInt(taskIdParam, 10, 64)
+	taskId, err := strconv.ParseInt(taskIdUrlParam, 10, 64)
 	if err != nil {
-		// TODO: implement proper error handling
-		http.NotFound(w, r)
+		http.Error(w, "Invalid task Id! it must be an integer", http.StatusBadRequest)
 		return
 	}
 
@@ -95,16 +94,15 @@ func (th *TasksHandler) HandleGetTaskById(w http.ResponseWriter, r *http.Request
 }
 
 func (th *TasksHandler) HandleUpdateTask(w http.ResponseWriter, r *http.Request) {
-	taskIdParam := chi.URLParam(r, "id")
-	if taskIdParam == "" {
-		http.NotFound(w, r)
+	taskIdUrlParam := chi.URLParam(r, "id")
+	if taskIdUrlParam == "" {
+		http.Error(w, "Invalid path! Missing task id", http.StatusBadRequest)
 		return
 	}
 
-	taskId, err := strconv.ParseInt(taskIdParam, 10, 64)
+	taskId, err := strconv.ParseInt(taskIdUrlParam, 10, 64)
 	if err != nil {
-		// TODO: implement proper error handling
-		http.NotFound(w, r)
+		http.Error(w, "Invalid task Id! it must be an integer", http.StatusBadRequest)
 		return
 	}
 
@@ -155,16 +153,15 @@ func (th *TasksHandler) HandleUpdateTask(w http.ResponseWriter, r *http.Request)
 }
 
 func (th *TasksHandler) HandleDeleteTask(w http.ResponseWriter, r *http.Request) {
-	taskIdParam := chi.URLParam(r, "id")
-	if taskIdParam == "" {
-		http.NotFound(w, r)
+	taskIdUrlParam := chi.URLParam(r, "id")
+	if taskIdUrlParam == "" {
+		http.Error(w, "Invalid path! Missing task id", http.StatusBadRequest)
 		return
 	}
 
-	taskId, err := strconv.ParseInt(taskIdParam, 10, 64)
+	taskId, err := strconv.ParseInt(taskIdUrlParam, 10, 64)
 	if err != nil {
-		// TODO: implement proper error handling
-		http.NotFound(w, r)
+		http.Error(w, "Invalid task Id! it must be an integer", http.StatusBadRequest)
 		return
 	}
 
