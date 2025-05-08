@@ -10,6 +10,7 @@ func SetupRoutes(app *app.Application) *chi.Mux {
 
 	r.Get("/healthcheck", app.HealthCheck)
 
+	// NOTE: for a more complex project I'd probably go with routes stacking/grouping
 	r.Get("/tasks", app.TasksHandler.HandleGetTasks)
 	r.Post("/tasks", app.TasksHandler.HandleCreateNewTask)
 	r.Get("/tasks/{id}", app.TasksHandler.HandleGetTaskById)
