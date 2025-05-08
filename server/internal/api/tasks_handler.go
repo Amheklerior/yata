@@ -168,7 +168,17 @@ func (th *TasksHandler) HandleDeleteTask(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	// TODO
+	deleted, err := th.taskStore.Delete(store.TaskId(taskId))
+	if err != nil {
+		http.Error(w, "Failed to delete the task", http.StatusInternalServerError)
+		return
+	}
 
+	if !deleted {
+		http.Error(w, fmt.Sprintf("Task with id %v does not exists", taskId), http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "Deleted task with id %d\n", taskId)
 }
