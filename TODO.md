@@ -6,7 +6,7 @@ NOTE. Musts are highlighted in **bold**.
 
 - [x] **scaffold BE project (Go /w Chi router)**
 - [x] **implement required APIs using an in memory DB**
-- [ ] **improve server logging**
+- [x] **improve server logging**
 - [ ] **improve code maintainabilty with some utils**
 - [ ] **write tests for main requirements**
 - [ ] stack up routes

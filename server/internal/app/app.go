@@ -18,7 +18,7 @@ type Application struct {
 func NewApplication() (*Application, error) {
 	logger := log.New(os.Stdout, "", log.Ldate|log.Ltime)
 	store := store.NewInMemoryTaskStore()
-	handler := api.NewTasksHandler(store)
+	handler := api.NewTasksHandler(store, logger)
 
 	app := &Application{
 		Logger:       logger,
