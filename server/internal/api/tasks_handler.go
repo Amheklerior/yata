@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -9,7 +10,9 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
-// TODO: isolate logic for extracting the task id from the url and converting it
+// TODO: add server logs
+// TODO: centralize logic for extracting the task id from the url and converting it
+// TODO: define utilities to encapsulate the logic for sending a response to the client
 
 type TasksHandler struct {
 	taskStore store.TaskStore
@@ -20,8 +23,15 @@ func NewTasksHandler(taskStore store.TaskStore) *TasksHandler {
 }
 
 func (th *TasksHandler) HandleGetTasks(w http.ResponseWriter, r *http.Request) {
-	// TODO
-	fmt.Fprintln(w, "Got the list of all tasks")
+	tasks, err := th.taskStore.Get()
+	if err != nil {
+		http.Error(w, "Failed to fetch tasks", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(tasks)
 }
 
 func (th *TasksHandler) HandleCreateNewTask(w http.ResponseWriter, r *http.Request) {
