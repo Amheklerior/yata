@@ -4,7 +4,6 @@ local SERVER="localhost:8080"
 local API_URL=$SERVER/tasks
 
 local cmd=$1
-local id=$2
 
 local health_check() {
 	xh GET $SERVER/healthcheck
@@ -15,24 +14,34 @@ local list_tasks() {
 }
 
 local create_new_task() {
-	xh POST $API_URL
+	# remove the first arg (which identifies the cmd)
+	shift
+
+	xh POST $API_URL $@
 }
 
 local get_task() {
+	local id=$2
 	xh GET $API_URL/$id
 }
 
 local update_task() {
-	xh PUT $API_URL/$id
+	local id=$2
+
+	# shift the first two args (cmd and id)
+	shift
+	shift
+	
+	xh PUT $API_URL/$id $@
 }
 
 local delete_task() {
+	local id=$2
 	xh DELETE $API_URL/$id
 }
 
 
-
-case "$1" in
+case $cmd in
 	check)
 		health_check
 		;;
@@ -40,16 +49,16 @@ case "$1" in
 		list_tasks
 		;;
 	new|add)
-		create_new_task
+		create_new_task $@
 		;;
 	get)
-		get_task
+		get_task $@
 		;;
 	update|u)
-		update_task
+		update_task $@
 		;;
 	delete|rm)
-		delete_task
+		delete_task $@
 		;;
 	*)
 		echo "Usage: yata {check|list|ls|new|add|get <id>|update <id>|u <id>|delete <id>|rm <id>}"
