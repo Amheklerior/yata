@@ -78,9 +78,20 @@ func (th *TasksHandler) HandleGetTaskById(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	// TODO
+	task, err := th.taskStore.GetById(store.TaskId(taskId))
+	if err != nil {
+		http.Error(w, "Failed to get the task", http.StatusInternalServerError)
+		return
+	}
 
-	fmt.Fprintf(w, "Got task with id %d\n", taskId)
+	if task == nil {
+		http.Error(w, fmt.Sprintf("Task with id %v does not exist", taskId), http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(task)
 }
 
 func (th *TasksHandler) HandleUpdateTask(w http.ResponseWriter, r *http.Request) {
