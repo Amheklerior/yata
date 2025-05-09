@@ -61,3 +61,11 @@ func (s *InMemoryTaskStore) Delete(id TaskId) (bool, error) {
 	delete(s.tasks, id)
 	return true, nil
 }
+
+// Utility builder function for testing purposes
+func (s *InMemoryTaskStore) With(tasks []Task) *InMemoryTaskStore {
+	for _, t := range tasks {
+		s.tasks[t.Id] = t
+	}
+	return s
+}
