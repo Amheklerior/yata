@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/Amheklerior/yata/server/internal/store"
+	"github.com/Amheklerior/yata/server/internal/utils"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -28,15 +29,13 @@ func (th *TasksHandler) HandleGetTasks(w http.ResponseWriter, r *http.Request) {
 	tasks, err := th.taskStore.Get()
 	if err != nil {
 		th.logger.Printf("ERROR: HandleGetTasks:\n%v\n", err.Error())
-		http.Error(w, "Failed to fetch tasks", http.StatusInternalServerError)
+		utils.WriteJSON(w, http.StatusInternalServerError, utils.Envelope{"error": "Failed to fetch tasks"})
 		return
 	}
 
 	th.logger.Printf("INFO: HandleGetTasks: Successfully fetched the list of tasks.\n%v\n", tasks)
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(tasks)
+	utils.WriteJSON(w, http.StatusOK, utils.Envelope{"tasks": tasks})
 }
 
 func (th *TasksHandler) HandleCreateNewTask(w http.ResponseWriter, r *http.Request) {
@@ -49,77 +48,73 @@ func (th *TasksHandler) HandleCreateNewTask(w http.ResponseWriter, r *http.Reque
 	err := json.NewDecoder(r.Body).Decode(&createTaskReq)
 	if err != nil {
 		th.logger.Printf("ERROR: HandleCreateNewTask: Error decoding the create task request body.\n%v\n", err.Error())
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": err.Error()})
 		return
 	}
 
 	createdTask, err := th.taskStore.Create(&store.Task{
 		Id:     -1, // ignored
 		Title:  createTaskReq.Title,
-		Detail: *createTaskReq.Detail,
+		Detail: *createTaskReq.Detail, // FIXME: potentially referencing a nil pointer
 		Status: "todo",
 	})
 
 	if err != nil {
 		th.logger.Printf("ERROR: HandleCreateNewTask:%v\n", err.Error())
-		http.Error(w, "Failed to create the task", http.StatusInternalServerError)
+		utils.WriteJSON(w, http.StatusInternalServerError, utils.Envelope{"error": "Failed to create the task"})
 		return
 	}
 
 	th.logger.Printf("INFO: HandleCreateNewTask: Successfully created new task.\n%v\n", createdTask)
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(createdTask)
+	utils.WriteJSON(w, http.StatusCreated, utils.Envelope{"task": createdTask})
 }
 
 func (th *TasksHandler) HandleGetTaskById(w http.ResponseWriter, r *http.Request) {
 	taskIdUrlParam := chi.URLParam(r, "id")
 	if taskIdUrlParam == "" {
 		th.logger.Printf("ERROR: Error extracting the id param from the request url.\n")
-		http.Error(w, "Invalid path! Missing task id", http.StatusBadRequest)
+		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": "Invalid path! Missing task id"})
 		return
 	}
 
 	taskId, err := strconv.ParseInt(taskIdUrlParam, 10, 64)
 	if err != nil {
 		th.logger.Printf("ERROR: Error parsing the id param from the request url.\n%v\n", err.Error())
-		http.Error(w, "Invalid task Id! it must be an integer", http.StatusBadRequest)
+		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": "Invalid task Id! it must be an integer"})
 		return
 	}
 
 	task, err := th.taskStore.GetById(store.TaskId(taskId))
 	if err != nil {
 		th.logger.Printf("ERROR: HandleGetTaskById:%v\n", err.Error())
-		http.Error(w, "Failed to get the task", http.StatusInternalServerError)
+		utils.WriteJSON(w, http.StatusInternalServerError, utils.Envelope{"error": "Failed to get the task"})
 		return
 	}
 
 	if task == nil {
 		th.logger.Printf("ERROR: HandleGetTaskById: Error getting task with id %v. It does not exist.\n", taskId)
-		http.Error(w, fmt.Sprintf("Task with id %v does not exist", taskId), http.StatusNotFound)
+		utils.WriteJSON(w, http.StatusNotFound, utils.Envelope{"error": fmt.Sprintf("Task with id %v does not exist", taskId)})
 		return
 	}
 
 	th.logger.Printf("INFO: HandleGetTaskById: Fetched task with id %v\n", taskId)
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(task)
+	utils.WriteJSON(w, http.StatusOK, utils.Envelope{"task": task})
 }
 
 func (th *TasksHandler) HandleUpdateTask(w http.ResponseWriter, r *http.Request) {
 	taskIdUrlParam := chi.URLParam(r, "id")
 	if taskIdUrlParam == "" {
-		th.logger.Printf("ERROR: Error extracting the id param from the request url.")
-		http.Error(w, "Invalid path! Missing task id", http.StatusBadRequest)
+		th.logger.Printf("ERROR: Error extracting the id param from the request url.\n")
+		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": "Invalid path! Missing task id"})
 		return
 	}
 
 	taskId, err := strconv.ParseInt(taskIdUrlParam, 10, 64)
 	if err != nil {
 		th.logger.Printf("ERROR: Error parsing the id param from the request url.\n%v\n", err.Error())
-		http.Error(w, "Invalid task Id! it must be an integer", http.StatusBadRequest)
+		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": "Invalid task Id! it must be an integer"})
 		return
 	}
 
@@ -133,7 +128,7 @@ func (th *TasksHandler) HandleUpdateTask(w http.ResponseWriter, r *http.Request)
 	err = json.NewDecoder(r.Body).Decode(&updateTaskReq)
 	if err != nil {
 		th.logger.Printf("ERROR: HandleUpdateTask: Error decoding request body.\n%v\n", err.Error())
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": err.Error()})
 		return
 	}
 
@@ -141,13 +136,13 @@ func (th *TasksHandler) HandleUpdateTask(w http.ResponseWriter, r *http.Request)
 	existing, err := th.taskStore.GetById(store.TaskId(taskId))
 	if err != nil {
 		th.logger.Printf("ERROR: HandleUpdateTask:\n%v\n", err.Error())
-		http.Error(w, "Could not update the task", http.StatusInternalServerError)
+		utils.WriteJSON(w, http.StatusInternalServerError, utils.Envelope{"error": "Could not update the task"})
 		return
 	}
 
 	if existing == nil {
 		th.logger.Printf("ERROR: HandleUpdateTask: Error while updating task with id %v. It does not exists.\n", taskId)
-		http.Error(w, fmt.Sprintf("Could not find task with id %v", taskId), http.StatusNotFound)
+		utils.WriteJSON(w, http.StatusNotFound, utils.Envelope{"error": fmt.Sprintf("Could not find task with id %v", taskId)})
 		return
 	}
 
@@ -165,47 +160,44 @@ func (th *TasksHandler) HandleUpdateTask(w http.ResponseWriter, r *http.Request)
 
 	updated, err := th.taskStore.Update(existing)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("Failed to update task with id %v", int(taskId)), http.StatusInternalServerError)
+		utils.WriteJSON(w, http.StatusInternalServerError, utils.Envelope{"error": fmt.Sprintf("Failed to update task with id %v", int(taskId))})
 		return
 	}
 
 	th.logger.Printf("INFO: HandleUpdateTask: Successfully updated task with id %v.\n%v\n", taskId, updated)
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(updated)
+	utils.WriteJSON(w, http.StatusOK, utils.Envelope{"task": updated})
 }
 
 func (th *TasksHandler) HandleDeleteTask(w http.ResponseWriter, r *http.Request) {
 	taskIdUrlParam := chi.URLParam(r, "id")
 	if taskIdUrlParam == "" {
-		th.logger.Printf("ERROR: Error extracting the id param from the request url.")
-		http.Error(w, "Invalid path! Missing task id", http.StatusBadRequest)
+		th.logger.Printf("ERROR: Error extracting the id param from the request url.\n")
+		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": "Invalid path! Missing task id"})
 		return
 	}
 
 	taskId, err := strconv.ParseInt(taskIdUrlParam, 10, 64)
 	if err != nil {
 		th.logger.Printf("ERROR: Error parsing the id param from the request url.\n%v\n", err.Error())
-		http.Error(w, "Invalid task Id! it must be an integer", http.StatusBadRequest)
+		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": "Invalid task Id! it must be an integer"})
 		return
 	}
 
 	deleted, err := th.taskStore.Delete(store.TaskId(taskId))
 	if err != nil {
 		th.logger.Printf("ERROR: HandleDeleteTask: Error deleting task with id %v.\n%v\n", taskId, err.Error())
-		http.Error(w, "Failed to delete the task", http.StatusInternalServerError)
+		utils.WriteJSON(w, http.StatusInternalServerError, utils.Envelope{"error": "Failed to delete the task"})
 		return
 	}
 
 	if !deleted {
 		th.logger.Printf("INFO: HandleDeleteTask: Task with id %v not deleted. It does not exists.\n", taskId)
-		http.Error(w, fmt.Sprintf("Task with id %v does not exists", taskId), http.StatusNotFound)
+		utils.WriteJSON(w, http.StatusNotFound, utils.Envelope{"error": fmt.Sprintf("Task with id %v does not exists", taskId)})
 		return
 	}
 
 	th.logger.Printf("INFO: HandleDeleteTask: Successfully deleted task with id %v.\n", taskId)
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Deleted task with id %d\n", taskId)
+	utils.WriteJSON(w, http.StatusOK, utils.Envelope{"message": fmt.Sprintf("Deleted task with id %d\n", taskId)})
 }
