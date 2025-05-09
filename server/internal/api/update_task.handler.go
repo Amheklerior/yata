@@ -23,14 +23,7 @@ func (th *TasksHandler) HandleUpdateTask(w http.ResponseWriter, r *http.Request)
 		Status *store.TaskStatus `json:"status"`
 	}
 
-	err = json.NewDecoder(r.Body).Decode(&updateTaskReq)
-	if err != nil {
-		th.logger.Printf("ERROR: HandleUpdateTask: Error decoding request body.\n%v\n", err.Error())
-		writeJSON(w, http.StatusBadRequest, envelope{"error": err.Error()})
-		return
-	}
-
-	// fetch existing task and integrate changes...
+	// fetch existing task...
 	existing, err := th.taskStore.GetById(store.TaskId(taskId))
 	if err != nil {
 		th.logger.Printf("ERROR: HandleUpdateTask:\n%v\n", err.Error())
@@ -41,6 +34,20 @@ func (th *TasksHandler) HandleUpdateTask(w http.ResponseWriter, r *http.Request)
 	if existing == nil {
 		th.logger.Printf("ERROR: HandleUpdateTask: Error while updating task with id %v. It does not exists.\n", taskId)
 		writeJSON(w, http.StatusNotFound, envelope{"error": fmt.Sprintf("Could not find task with id %v", taskId)})
+		return
+	}
+
+	// apply changes...
+	err = json.NewDecoder(r.Body).Decode(&updateTaskReq)
+	if err != nil {
+		th.logger.Printf("ERROR: HandleUpdateTask: Error decoding request body.\n%v\n", err.Error())
+		writeJSON(w, http.StatusBadRequest, envelope{"error": err.Error()})
+		return
+	}
+
+	if updateTaskReq.Title == nil && updateTaskReq.Detail == nil && updateTaskReq.Status == nil {
+		th.logger.Println("ERROR: HandleUpdateTask: Empty request body.")
+		writeJSON(w, http.StatusBadRequest, envelope{"error": "request body cannot be empty"})
 		return
 	}
 
