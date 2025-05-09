@@ -2,7 +2,12 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"strconv"
+
+	"github.com/Amheklerior/yata/server/internal/store"
+	"github.com/go-chi/chi/v5"
 )
 
 // The data to send as JSON
@@ -24,4 +29,18 @@ func WriteJSON(w http.ResponseWriter, status int, data Envelope) error {
 	w.Write(js)
 
 	return nil
+}
+
+func GetTaskIdFromURLParam(r *http.Request) (store.TaskId, error) {
+	taskIdUrlParam := chi.URLParam(r, "id")
+	if taskIdUrlParam == "" {
+		return 0, fmt.Errorf("invalid Id: '%v'", taskIdUrlParam)
+	}
+
+	taskId, err := strconv.ParseInt(taskIdUrlParam, 10, 64)
+	if err != nil {
+		return 0, fmt.Errorf("invalid Id. '%v' is not an integer value", taskIdUrlParam)
+	}
+
+	return store.TaskId(taskId), nil
 }

@@ -5,16 +5,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/Amheklerior/yata/server/internal/store"
 	"github.com/Amheklerior/yata/server/internal/utils"
-	"github.com/go-chi/chi/v5"
 )
-
-// TODO: add server logs
-// TODO: centralize logic for extracting the task id from the url and converting it
-// TODO: define utilities to encapsulate the logic for sending a response to the client
 
 type TasksHandler struct {
 	taskStore store.TaskStore
@@ -76,17 +70,10 @@ func (th *TasksHandler) HandleCreateNewTask(w http.ResponseWriter, r *http.Reque
 }
 
 func (th *TasksHandler) HandleGetTaskById(w http.ResponseWriter, r *http.Request) {
-	taskIdUrlParam := chi.URLParam(r, "id")
-	if taskIdUrlParam == "" {
-		th.logger.Printf("ERROR: Error extracting the id param from the request url.\n")
-		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": "Invalid path! Missing task id"})
-		return
-	}
-
-	taskId, err := strconv.ParseInt(taskIdUrlParam, 10, 64)
+	taskId, err := utils.GetTaskIdFromURLParam(r)
 	if err != nil {
-		th.logger.Printf("ERROR: Error parsing the id param from the request url.\n%v\n", err.Error())
-		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": "Invalid task Id! it must be an integer"})
+		th.logger.Printf("ERROR: HandleGetTaskById:\n%v\n", err.Error())
+		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": err.Error()})
 		return
 	}
 
@@ -109,17 +96,10 @@ func (th *TasksHandler) HandleGetTaskById(w http.ResponseWriter, r *http.Request
 }
 
 func (th *TasksHandler) HandleUpdateTask(w http.ResponseWriter, r *http.Request) {
-	taskIdUrlParam := chi.URLParam(r, "id")
-	if taskIdUrlParam == "" {
-		th.logger.Printf("ERROR: Error extracting the id param from the request url.\n")
-		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": "Invalid path! Missing task id"})
-		return
-	}
-
-	taskId, err := strconv.ParseInt(taskIdUrlParam, 10, 64)
+	taskId, err := utils.GetTaskIdFromURLParam(r)
 	if err != nil {
-		th.logger.Printf("ERROR: Error parsing the id param from the request url.\n%v\n", err.Error())
-		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": "Invalid task Id! it must be an integer"})
+		th.logger.Printf("ERROR: HandleUpdateTask:\n%v\n", err.Error())
+		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": err.Error()})
 		return
 	}
 
@@ -175,17 +155,10 @@ func (th *TasksHandler) HandleUpdateTask(w http.ResponseWriter, r *http.Request)
 }
 
 func (th *TasksHandler) HandleDeleteTask(w http.ResponseWriter, r *http.Request) {
-	taskIdUrlParam := chi.URLParam(r, "id")
-	if taskIdUrlParam == "" {
-		th.logger.Printf("ERROR: Error extracting the id param from the request url.\n")
-		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": "Invalid path! Missing task id"})
-		return
-	}
-
-	taskId, err := strconv.ParseInt(taskIdUrlParam, 10, 64)
+	taskId, err := utils.GetTaskIdFromURLParam(r)
 	if err != nil {
-		th.logger.Printf("ERROR: Error parsing the id param from the request url.\n%v\n", err.Error())
-		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": "Invalid task Id! it must be an integer"})
+		th.logger.Printf("ERROR: HandleDeleteTask:\n%v\n", err.Error())
+		utils.WriteJSON(w, http.StatusBadRequest, utils.Envelope{"error": err.Error()})
 		return
 	}
 
