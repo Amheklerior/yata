@@ -52,10 +52,15 @@ func (th *TasksHandler) HandleCreateNewTask(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
+	detail := ""
+	if createTaskReq.Detail != nil {
+		detail = *createTaskReq.Detail
+	}
+
 	createdTask, err := th.taskStore.Create(&store.Task{
 		Id:     -1, // ignored
 		Title:  createTaskReq.Title,
-		Detail: *createTaskReq.Detail, // FIXME: potentially referencing a nil pointer
+		Detail: detail,
 		Status: "todo",
 	})
 
