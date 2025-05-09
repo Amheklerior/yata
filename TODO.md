@@ -7,12 +7,12 @@ NOTE. Musts are highlighted in **bold**.
 - [x] **scaffold BE project (Go /w Chi router)**
 - [x] **implement required APIs using an in memory DB**
 - [x] **improve server logging**
-- [ ] **improve code maintainabilty with some utils**
+- [x] **improve code maintainabilty with some utils**
 - [ ] **write tests for main requirements**
 - [ ] stack up routes
+- [ ] integrate SQLite and replace the in memory DB
 - [ ] define a make file for the project
 - [ ] integrate air for server
-- [ ] integrate SQLite and replace the in memory DB
 
 ## Client
 
@@ -27,7 +27,7 @@ NOTE. Musts are highlighted in **bold**.
 
 ## Quality of Life
 
-- [ ] **implement a simple cli for testing the server via terminal**
+- [x] **implement a simple cli for testing the server via terminal**
 - [ ] **dockerize the entire app with Docker Compose**
 - [ ] implement a simple CI/CD pipeline with GitHub Actions
 
