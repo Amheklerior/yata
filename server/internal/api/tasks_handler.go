@@ -35,7 +35,7 @@ func (th *TasksHandler) HandleGetTasks(w http.ResponseWriter, r *http.Request) {
 
 	th.logger.Printf("INFO: HandleGetTasks: Successfully fetched the list of tasks.\n%v\n", tasks)
 
-	utils.WriteJSON(w, http.StatusOK, utils.Envelope{"tasks": tasks})
+	utils.WriteJSON(w, http.StatusOK, utils.Envelope{"tasks": tasks, "total": len(tasks)})
 }
 
 func (th *TasksHandler) HandleCreateNewTask(w http.ResponseWriter, r *http.Request) {
