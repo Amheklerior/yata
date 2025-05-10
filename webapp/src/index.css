@@ -19,3 +19,9 @@
     text-wrap: pretty;
   }
 }
+
+@layer utilities {
+  .debug {
+    @apply border-red-700 border-2
+  }
+}
