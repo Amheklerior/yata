@@ -6,6 +6,7 @@ import (
 	"github.com/Amheklerior/yata/server/internal/app"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 )
 
 func SetupRoutes(app *app.Application) *chi.Mux {
@@ -17,6 +18,12 @@ func SetupRoutes(app *app.Application) *chi.Mux {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Timeout(60 * time.Second))
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins: []string{"https://*", "http://*"},
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders: []string{"Accept", "Content-Type"},
+		ExposedHeaders: []string{"Link"},
+	}))
 
 	// Set up routes
 	r.Get("/healthcheck", app.HealthCheck) // GET /healthcheck
