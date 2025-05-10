@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { TaskItem } from "./TaskItem";
-import { useGetTasks } from "../lib/task/query";
+import { useGetTasks } from "../lib/query";
+import type { Task } from "../lib/types";
 
 const Loading: FC = () => <p>Loading...</p>;
 const Error: FC = () => <p>Error</p>;
@@ -19,7 +20,7 @@ export const TasksList: FC = () => {
         <EmptyList />
       ) : (
         <ul>
-          {data.tasks.map((task) => (
+          {data.tasks.map((task: Task) => (
             <TaskItem key={task.id} task={task} />
           ))}
         </ul>

@@ -1,5 +1,5 @@
 import { Form } from "radix-ui";
-import { useCreateTask } from "../lib/task/query";
+import { useCreateTask } from "../lib/query";
 import { useCallback } from "react";
 
 export const AddForm = () => {

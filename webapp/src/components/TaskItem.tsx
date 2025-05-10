@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import type { Task } from "../lib/task/types";
-import { useDeleteTask, useUpdateTask } from "../lib/task/query";
+import type { Task } from "../lib/types";
+import { useDeleteTask, useUpdateTask } from "../lib/query";
 
 export const TaskItem: FC<{ task: Task }> = ({ task }) => {
   const { mutate: updateTask } = useUpdateTask(task.id);
@@ -8,11 +8,6 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
 
   const handleUpdateTask = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-
-    const isChecked = e.target.checked;
-
-    console.log("task", task);
-    console.log("isChecked", isChecked);
 
     updateTask(
       { status: e.target.checked ? "done" : "todo" },
@@ -31,6 +26,7 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     deleteTask(undefined, {
       onError: (error) => {
         // Give feedback to the user

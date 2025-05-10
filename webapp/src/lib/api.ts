@@ -1,5 +1,5 @@
+import { HttpClient } from "./httpClient";
 import { CreateTaskReqBodySchema, UpdateTaskReqBodySchema } from "./schemas";
-import { HttpClient } from "../http";
 import type {
   CreateTaskReqBody,
   CreateTaskResponse,
