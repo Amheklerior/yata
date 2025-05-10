@@ -6,7 +6,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => (
   <div className="flex h-screen flex-col text-center">
     <Header />
     <main className="grow">
-      <div className="wrapper debug h-full py-6">{children}</div>
+      <div className="wrapper h-full">{children}</div>
     </main>
     <Footer />
   </div>

@@ -40,13 +40,13 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
   };
 
   return (
-    <li>
+    <li className="debug flex items-center gap-4 p-4">
       <input
         type="checkbox"
         checked={task.status === "done"}
         onChange={handleUpdateTask}
       />
-      <h3>{task.title}</h3>
+      <h3 className="grow text-left">{task.title}</h3>
       <button onClick={handleDelete}>Delete</button>
     </li>
   );

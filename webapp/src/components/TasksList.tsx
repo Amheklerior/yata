@@ -15,16 +15,17 @@ export const TasksList: FC = () => {
   if (!isSuccess) return <Error />;
 
   return (
-    <section id="tasks-list">
+    <>
       {data.total === 0 ? (
         <EmptyList />
       ) : (
-        <ul>
+        // TODO: remove scrollbar
+        <ul className="max-h-[420px] overflow-y-auto">
           {data.tasks.map((task: Task) => (
             <TaskItem key={task.id} task={task} />
           ))}
         </ul>
       )}
-    </section>
+    </>
   );
 };

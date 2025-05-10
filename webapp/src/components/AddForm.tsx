@@ -33,17 +33,34 @@ export const AddForm = () => {
 
   // TODO: Add validation
   // TODO: Add loading UI (while performing the submit)
+  // TODO: prevent CLS when validation error appears
 
   return (
-    <Form.Root onSubmit={handleSubmit}>
-      <Form.Field name="title">
-        <Form.Label htmlFor="title">title</Form.Label>
-        <Form.Control type="text" required />
-        <Form.Message match="valueMissing">required</Form.Message>
+    <Form.Root
+      onSubmit={handleSubmit}
+      className="debug flex items-start gap-4 p-4"
+    >
+      <Form.Field name="title" className="flex grow flex-col gap-2">
+        <Form.Label htmlFor="title" className="sr-only">
+          title
+        </Form.Label>
+        <Form.Control
+          type="text"
+          required
+          className="debug grow p-2 placeholder:font-light placeholder:text-gray-600"
+          placeholder="Add a new task..."
+        />
+        <Form.Message
+          match="valueMissing"
+          className="text-left valid:invisible invalid:visible"
+        >
+          required
+        </Form.Message>
       </Form.Field>
       <Form.Submit asChild>
         <button
           type="submit"
+          className="sr-only"
           disabled={false} // TODO: hook this up
         >
           Add
