@@ -1,23 +1,14 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Layout } from "./layouts/Layout";
 
 function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <p>
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Layout>
+      <section className="grid grid-cols-1 gap-4">
+        <p> form for adding new tasks </p>
+        <p> list of tasks </p>
+      </section>
+    </Layout>
+  );
 }
 
-export default App
+export default App;
