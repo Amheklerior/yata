@@ -21,6 +21,12 @@ func (th *TasksHandler) HandleCreateNewTask(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
+	if createTaskReq.Title == "" {
+		th.logger.Printf("ERROR: HandleCreateNewTask: Error decoding the request. Empty title.")
+		writeJSON(w, http.StatusBadRequest, envelope{"error": "Title cannot be null or empty string"})
+		return
+	}
+
 	detail := ""
 	if createTaskReq.Detail != nil {
 		detail = *createTaskReq.Detail
