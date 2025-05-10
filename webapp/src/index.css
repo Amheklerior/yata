@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+@theme {
+  /* TODO: define a basic theme */
+}
+
+@layer base {
+  /* balance multiline headings (ensure an evenly distrubuted lenght on all lines) */
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  /* prevent orphan words on long texts (if one goes next line, enforce the second one to go with it) */
+  p,
+  li {
+    text-wrap: pretty;
+  }
+}
