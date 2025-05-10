@@ -18,14 +18,18 @@ func SetupRoutes(app *app.Application) *chi.Mux {
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Timeout(60 * time.Second))
 
-	r.Get("/healthcheck", app.HealthCheck)
+	// Set up routes
+	r.Get("/healthcheck", app.HealthCheck) // GET /healthcheck
+	r.Route("/tasks", func(r chi.Router) {
+		r.Get("/", app.TasksHandler.HandleGetTasks)       // GET /tasks
+		r.Post("/", app.TasksHandler.HandleCreateNewTask) // POST /tasks
 
-	// NOTE: for a more complex project I'd probably go with routes stacking/grouping
-	r.Get("/tasks", app.TasksHandler.HandleGetTasks)
-	r.Post("/tasks", app.TasksHandler.HandleCreateNewTask)
-	r.Get("/tasks/{id}", app.TasksHandler.HandleGetTaskById)
-	r.Put("/tasks/{id}", app.TasksHandler.HandleUpdateTask)
-	r.Delete("/tasks/{id}", app.TasksHandler.HandleDeleteTask)
+		r.Route("/{id}", func(r chi.Router) {
+			r.Get("/", app.TasksHandler.HandleGetTaskById)   // GET /tasks/:id
+			r.Put("/", app.TasksHandler.HandleUpdateTask)    // PUT /tasks/:id
+			r.Delete("/", app.TasksHandler.HandleDeleteTask) // DELETE /tasks/:id
+		})
+	})
 
 	return r
 }
