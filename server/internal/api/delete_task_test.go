@@ -21,22 +21,22 @@ func TestDeleteTaskHandler(t *testing.T) {
 		expectedStatusCode int
 	}{
 		{
-			name:               "GetTaskByIdHandler: success",
+			name:               "DeleteTaskHandler: success",
 			id:                 "2",
 			expectedStatusCode: http.StatusOK,
 		},
 		{
-			name:               "GetTaskByIdHandler: not found",
+			name:               "DeleteTaskHandler: not found",
 			id:                 "5",
 			expectedStatusCode: http.StatusNotFound,
 		},
 		{
-			name:               "GetTaskByIdHandler: invalid url param (no id)",
+			name:               "DeleteTaskHandler: invalid url param (no id)",
 			id:                 "",
 			expectedStatusCode: http.StatusBadRequest,
 		},
 		{
-			name:               "GetTaskByIdHandler: invalid url param (wrong type for id)",
+			name:               "DeleteTaskHandler: invalid url param (wrong type for id)",
 			id:                 "string-id",
 			expectedStatusCode: http.StatusBadRequest,
 		},

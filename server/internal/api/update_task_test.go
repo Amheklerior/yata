@@ -26,7 +26,7 @@ func TestUpdateTaskHandler(t *testing.T) {
 		expectedUpdatedTask *store.Task
 	}{
 		{
-			name:               "GetTaskByIdHandler: success (title update)",
+			name:               "UpdateTaskHandler: success (title update)",
 			id:                 "2",
 			body:               strings.NewReader(`{"title": "Updated Task Title"}`),
 			expectedStatusCode: http.StatusOK,
@@ -38,7 +38,7 @@ func TestUpdateTaskHandler(t *testing.T) {
 			},
 		},
 		{
-			name:               "GetTaskByIdHandler: success (full update)",
+			name:               "UpdateTaskHandler: success (full update)",
 			id:                 "2",
 			body:               strings.NewReader(`{"title": "Updated Task Title", "detail": "Updated Task Detail", "status": "done"}`),
 			expectedStatusCode: http.StatusOK,
@@ -50,43 +50,43 @@ func TestUpdateTaskHandler(t *testing.T) {
 			},
 		},
 		{
-			name:               "GetTaskByIdHandler: not found",
+			name:               "UpdateTaskHandler: not found",
 			id:                 "5",
 			body:               strings.NewReader(`{"title": "Won't matter"}`),
 			expectedStatusCode: http.StatusNotFound,
 		},
 		{
-			name:               "GetTaskByIdHandler: invalid url param (no id)",
+			name:               "UpdateTaskHandler: invalid url param (no id)",
 			id:                 "",
 			body:               strings.NewReader(`{"title": "Should fail"}`),
 			expectedStatusCode: http.StatusBadRequest,
 		},
 		{
-			name:               "GetTaskByIdHandler: invalid url param (wrong type for id)",
+			name:               "UpdateTaskHandler: invalid url param (wrong type for id)",
 			id:                 "string-id",
 			body:               strings.NewReader(`{"title": "Should also fail"}`),
 			expectedStatusCode: http.StatusBadRequest,
 		},
 		{
-			name:               "GetTaskByIdHandler: malformed request body (missing quotes)",
+			name:               "UpdateTaskHandler: malformed request body (missing quotes)",
 			id:                 "2",
 			body:               strings.NewReader(`{title: "Missing quotes"}`),
 			expectedStatusCode: http.StatusBadRequest,
 		},
 		{
-			name:               "GetTaskByIdHandler: malformed request body (invalid field)",
+			name:               "UpdateTaskHandler: malformed request body (invalid field)",
 			id:                 "2",
 			body:               strings.NewReader(`{"invalidField": "This field does not exist on Task"}`),
 			expectedStatusCode: http.StatusBadRequest,
 		},
 		{
-			name:               "GetTaskByIdHandler: malformed request body (mispelled field)",
+			name:               "UpdateTaskHandler: malformed request body (mispelled field)",
 			id:                 "2",
 			body:               strings.NewReader(`{"titlee": "It should be 'title'"}`),
 			expectedStatusCode: http.StatusBadRequest,
 		},
 		{
-			name:               "GetTaskByIdHandler: malformed request body (invalid value)",
+			name:               "UpdateTaskHandler: malformed request body (invalid value)",
 			id:                 "2",
 			body:               strings.NewReader(`{"status": "completed"}`),
 			expectedStatusCode: http.StatusBadRequest,
