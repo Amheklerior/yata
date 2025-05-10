@@ -2,6 +2,7 @@ package store
 
 import (
 	"errors"
+	"sort"
 )
 
 type InMemoryTaskStore struct {
@@ -22,6 +23,10 @@ func (s *InMemoryTaskStore) Get() ([]Task, error) {
 	for _, task := range s.tasks {
 		list = append(list, task)
 	}
+
+	sort.Slice(list, func(i, j int) bool {
+		return list[i].Id > list[j].Id
+	})
 
 	return list, nil
 }

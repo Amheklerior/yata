@@ -19,6 +19,7 @@ const (
 	COMPLETED TaskStatus = "done"
 )
 
+// TODO: add audits fields
 type Task struct {
 	Id     TaskId     `json:"id"`
 	Title  string     `json:"title"`
