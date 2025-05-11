@@ -2,15 +2,25 @@ import type { FC } from "react";
 import { TaskItem } from "./TaskItem";
 import { useGetTasks } from "../lib/query";
 import type { Task } from "../lib/types";
+import { TaskItemSkeleton } from "./TaskItemScheleton";
 
-const Loading: FC = () => <p>Loading...</p>;
+const Loading: FC = () => (
+  <div>
+    {Array.from({ length: 4 }).map((_, i) => (
+      <TaskItemSkeleton key={i} />
+    ))}
+  </div>
+);
+
 const Error: FC = () => <p>Error</p>;
-const EmptyList: FC = () => <p>No tasks Yet. Start adding some...</p>;
+const EmptyList: FC = () => (
+  <p className="text-stone-300">No tasks Yet. Start adding some...</p>
+);
 
 export const TasksList: FC = () => {
   const { data, isLoading, isSuccess } = useGetTasks();
 
-  if (isLoading || !isSuccess) return <Loading />;
+  if (isLoading) return <Loading />;
 
   if (!isSuccess) return <Error />;
 
