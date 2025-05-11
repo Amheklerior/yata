@@ -51,5 +51,6 @@ I decided to implement top level tests in order to test the whole stack from han
 ## Other things I wanted to implement
 
 - integrating [Air](https://github.com/air-verse/air) (live server reloading during development) to save a bit of time
-- implement a persistent [SQLite](https://www.sqlite.org/index.html) database instead of the in-memory one
 - replace the [`getTaskIdFromURLParam`](./internal/api/tasks_handler.go) function with a custom middleware to attach to the `/:id` subroutes.
+- implement safe cuncurrent access to the database (using a mutex) -- skipped because the idea was to do the following instead...
+- implement a persistent [SQLite](https://www.sqlite.org/index.html) database instead of the in-memory one
