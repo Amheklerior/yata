@@ -8,20 +8,20 @@ NOTE. Musts are highlighted in **bold**.
 - [x] **implement required APIs using an in memory DB**
 - [x] **improve server logging**
 - [x] **improve code maintainabilty with some utils**
-- [ ] **write tests for main requirements**
-- [ ] stack up routes
+- [x] **write tests for main requirements**
+- [x] stack up routes
 - [ ] integrate SQLite and replace the in memory DB
 - [ ] define a make file for the project
-- [ ] integrate air for server
+- [ ] integrate air for live server
 
 ## Client
 
-- [ ] **scaffold the project (React/TS, Tailwind, Vite)**
-- [ ] **implement the _list all tasks_ view**
-- [ ] **implement the _add new task_ functionality**
-- [ ] **implement the _mark as complete_ functionality**
-- [ ] **implement the _delete a task_ functionality**
-- [ ] **improve UI (structure / colors / font / styles / ui lib?)**
+- [x] **scaffold the project (React/TS, Tailwind, Vite)**
+- [x] **implement the _list all tasks_ view**
+- [x] **implement the _add new task_ functionality**
+- [x] **implement the _mark as complete_ functionality**
+- [x] **implement the _delete a task_ functionality**
+- [x] **improve UI (structure / colors / font / styles / ui lib?)**
 - [ ] add some juice (anim / fx / sound)
 - [ ] integrate keybord usage
 
