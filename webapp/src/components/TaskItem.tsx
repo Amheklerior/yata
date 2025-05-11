@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { use, type FC } from "react";
 import type { Task } from "../lib/types";
 import { useDeleteTask, useUpdateTask } from "../lib/query";
 import clsx from "clsx";
@@ -6,10 +6,13 @@ import closeSvg from "../assets/close.svg";
 import checkSound from "../assets/mark-sound.wav";
 import deleteSound from "../assets/delete-sound.wav";
 import { play } from "../lib/sounds";
+import { NotificationCtx } from "../contexts/notificationCtx";
 
 export const TaskItem: FC<{ task: Task }> = ({ task }) => {
   const { mutate: updateTask } = useUpdateTask(task.id);
   const { mutate: deleteTask } = useDeleteTask(task.id);
+
+  const { notify } = use(NotificationCtx);
 
   const isComplete = task.status === "done";
 
@@ -19,10 +22,7 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
     updateTask(
       { status: !isComplete ? "done" : "todo" },
       {
-        onError: (error) => {
-          // TODO: Give feedback to the user
-          console.error(error);
-        },
+        onError: () => notify("There was an error updating the task"),
         onSuccess: () => play(checkSound),
       },
     );
@@ -32,10 +32,7 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
     e.preventDefault();
 
     deleteTask(undefined, {
-      onError: (error) => {
-        // TODO: Give feedback to the user
-        console.error(error);
-      },
+      onError: () => notify("There was an error deleting the task"),
       onSuccess: () => play(deleteSound),
     });
   };

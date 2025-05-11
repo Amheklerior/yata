@@ -1,8 +1,9 @@
-import type { FC } from "react";
+import { use, useEffect, type FC } from "react";
 import { TaskItem } from "./TaskItem";
 import { useGetTasks } from "../lib/query";
 import type { Task } from "../lib/types";
 import { TaskItemSkeleton } from "./TaskItemScheleton";
+import { NotificationCtx } from "../contexts/notificationCtx";
 
 const Loading: FC = () => (
   <div>
@@ -12,7 +13,6 @@ const Loading: FC = () => (
   </div>
 );
 
-const Error: FC = () => <p>Error</p>;
 const EmptyList: FC = () => (
   <p className="text-stone-300">No tasks Yet. Start adding some...</p>
 );
@@ -20,11 +20,16 @@ const EmptyList: FC = () => (
 export const TasksList: FC = () => {
   const { data, isLoading, isSuccess } = useGetTasks();
 
-  if (isLoading) return <Loading />;
+  const { notify } = use(NotificationCtx);
 
-  if (!isSuccess) return <Error />;
+  useEffect(() => {
+    if (!isSuccess) notify("There was an error loading the tasks");
+  }, [isSuccess, notify]);
+
+  if (isLoading || !isSuccess) return <Loading />;
 
   // TODO: blur top and bottom of the list if contines in that direction
+  // TODO: enter and exit anim of items
 
   return (
     <>

@@ -1,13 +1,16 @@
 import { Form } from "radix-ui";
 import { useCreateTask } from "../lib/query";
-import { useCallback } from "react";
+import { use, useCallback } from "react";
 import clsx from "clsx";
 import addSound from "../assets/add-sound.wav";
 import { play } from "../lib/sounds";
 import { Spinner } from "./Spinner";
+import { NotificationCtx } from "../contexts/notificationCtx";
 
 export const AddForm = () => {
   const { mutate: createTask, isPending } = useCreateTask();
+
+  const { notify } = use(NotificationCtx);
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -18,20 +21,15 @@ export const AddForm = () => {
       createTask(
         { title },
         {
-          onError: (error) => {
-            // TODO: Give feedback to the user
-            console.error(error);
-          },
+          onError: () => notify("There was an error creating the task"),
           onSuccess: () => play(addSound),
         },
       );
 
       e.currentTarget.reset();
     },
-    [createTask],
+    [createTask, notify],
   );
-
-  // TODO: Add loading UI (while performing the submit)
 
   return (
     <Form.Root onSubmit={handleSubmit} className="flex items-start gap-4 p-4">
