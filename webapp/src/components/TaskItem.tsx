@@ -2,6 +2,7 @@ import type { FC } from "react";
 import type { Task } from "../lib/types";
 import { useDeleteTask, useUpdateTask } from "../lib/query";
 import clsx from "clsx";
+import closeSvg from "../assets/close.svg";
 
 export const TaskItem: FC<{ task: Task }> = ({ task }) => {
   const { mutate: updateTask } = useUpdateTask(task.id);
@@ -49,20 +50,25 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
           Mark as {isComplete ? "complete" : "to do"}
         </span>
         <div
-          className={clsx(
-            "inner-circle",
-            isComplete ? "visible size-3" : "hidden",
-          )}
+          className={clsx("inner-circle", isComplete ? "scale-100" : "scale-0")}
         />
       </button>
-      <h3 className={clsx("grow text-left", isComplete ? "line-through" : "")}>
+      <h3
+        className={clsx(
+          "grow text-left transition-colors duration-300",
+          isComplete ? "text-stone-200/50 line-through" : "",
+        )}
+      >
         {task.title}
       </h3>
-      <button
-        onClick={handleDelete}
-        className="font-mono text-lg hover:cursor-pointer hover:text-red-400"
-      >
-        x
+      <button onClick={handleDelete} className="hover:cursor-pointer">
+        <img
+          src={closeSvg}
+          alt="Delete task"
+          width={24}
+          height={24}
+          className="close-icon"
+        />
       </button>
     </li>
   );

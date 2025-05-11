@@ -44,6 +44,7 @@ export const AddForm = () => {
           placeholder="Add a new task..."
           className={clsx(
             "grow rounded-lg border p-2",
+            "transition-all duration-300",
             "hover:bg-stone-600/10 focus:bg-stone-600/10",
             "border-stone-400 caret-amber-200 placeholder:text-stone-400/70",
             "hover:border-amber-100 hover:ring-0 focus:border-amber-100 focus:ring-0 focus:outline-none",
