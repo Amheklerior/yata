@@ -4,7 +4,7 @@ BINARY_NAME := yata-server
 
 
 dev:
-	air
+	go run main.go
 
 preview: build
 	dist/bin/$(BINARY_NAME)
@@ -17,3 +17,6 @@ clean:
 
 fmt:
 	go fmt .
+
+test:
+	go test ./...

@@ -11,7 +11,7 @@ NOTE. Musts are highlighted in **bold**.
 - [x] **write tests for main requirements**
 - [x] stack up routes
 - [ ] integrate SQLite and replace the in memory DB
-- [ ] define a make file for the project
+- [x] define a make file for the project
 - [ ] integrate air for live server
 
 ## Client
