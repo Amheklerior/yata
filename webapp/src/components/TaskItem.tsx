@@ -3,6 +3,9 @@ import type { Task } from "../lib/types";
 import { useDeleteTask, useUpdateTask } from "../lib/query";
 import clsx from "clsx";
 import closeSvg from "../assets/close.svg";
+import checkSound from "../assets/mark-sound.wav";
+import deleteSound from "../assets/delete-sound.wav";
+import { play } from "../lib/sounds";
 
 export const TaskItem: FC<{ task: Task }> = ({ task }) => {
   const { mutate: updateTask } = useUpdateTask(task.id);
@@ -17,13 +20,10 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
       { status: !isComplete ? "done" : "todo" },
       {
         onError: (error) => {
-          // Give feedback to the user
+          // TODO: Give feedback to the user
           console.error(error);
         },
-        onSuccess: () => {
-          // TODO: Give feedback to the user
-          console.log("Task updated");
-        },
+        onSuccess: () => play(checkSound),
       },
     );
   };
@@ -33,13 +33,10 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
 
     deleteTask(undefined, {
       onError: (error) => {
-        // Give feedback to the user
+        // TODO: Give feedback to the user
         console.error(error);
       },
-      onSuccess: () => {
-        // TODO: Give feedback to the user
-        console.log("Task deleted");
-      },
+      onSuccess: () => play(deleteSound),
     });
   };
 

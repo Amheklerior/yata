@@ -2,6 +2,8 @@ import { Form } from "radix-ui";
 import { useCreateTask } from "../lib/query";
 import { useCallback } from "react";
 import clsx from "clsx";
+import addSound from "../assets/add-sound.wav";
+import { play } from "../lib/sounds";
 
 export const AddForm = () => {
   const { mutate: createTask } = useCreateTask();
@@ -16,12 +18,10 @@ export const AddForm = () => {
         { title },
         {
           onError: (error) => {
-            // Give feedback to the user
+            // TODO: Give feedback to the user
             console.error(error);
           },
-          onSuccess: () => {
-            // TODO: Give feedback to the user
-          },
+          onSuccess: () => play(addSound),
         },
       );
 
@@ -43,7 +43,7 @@ export const AddForm = () => {
           required
           placeholder="Add a new task..."
           className={clsx(
-            "grow rounded-lg border p-2",
+            "grow rounded-lg border px-3 py-2 placeholder:text-sm placeholder:uppercase",
             "transition-all duration-300",
             "hover:bg-stone-600/10 focus:bg-stone-600/10",
             "border-stone-400 caret-amber-200 placeholder:text-stone-400/70",
@@ -57,11 +57,7 @@ export const AddForm = () => {
         </div>
       </Form.Field>
       <Form.Submit asChild>
-        <button
-          type="submit"
-          className="sr-only"
-          disabled={false} // TODO: hook this up
-        >
+        <button type="submit" className="sr-only">
           Add
         </button>
       </Form.Submit>
