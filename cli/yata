@@ -3,6 +3,22 @@
 local SERVER="localhost:8080"
 local API_URL=$SERVER/tasks
 
+local HELP_PAGE="\
+Usage: yata {check|list|ls|new|add|get <id>|update <id>|u <id>|delete <id>|rm <id>}
+
+Commands:
+  check        Check if the server is running
+  list|ls      List all tasks
+  new|add      Create a new task
+  get          Get a task by id
+  update|u     Update a task by id
+  delete|rm    Delete a task by id
+  help         Display this help
+
+Notes:
+  Use title=\"a title\", detail=\"some detail\" and status=\"todo\" to set the values of the task in those operation where you need to provide a request body.
+"
+
 local cmd=$1
 
 local health_check() {
@@ -61,5 +77,5 @@ case $cmd in
 		delete_task $@
 		;;
 	*)
-		echo "Usage: yata {check|list|ls|new|add|get <id>|update <id>|u <id>|delete <id>|rm <id>}"
+		echo "$HELP_PAGE"
 esac
