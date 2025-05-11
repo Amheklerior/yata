@@ -26,6 +26,7 @@ NOTE. Musts are highlighted in **bold**.
 - [x] **implement loading states handling**
 - [x] add some juice (anim / fx / sound)
 - [x] integrate keybord usage
+- [x] reduce bundle size
 
 ## Quality of Life
 

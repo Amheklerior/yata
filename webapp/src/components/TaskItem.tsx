@@ -1,12 +1,12 @@
 import { use, type FC } from "react";
-import type { Task } from "../lib/types";
-import { useDeleteTask, useUpdateTask } from "../lib/query";
-import clsx from "clsx";
+import clsx from "clsx/lite";
 import closeSvg from "../assets/close.svg";
 import checkSound from "../assets/mark-sound.wav";
 import deleteSound from "../assets/delete-sound.wav";
-import { play } from "../lib/sounds";
 import { NotificationCtx } from "../contexts/notificationCtx";
+import { useDeleteTask, useUpdateTask } from "../lib/query";
+import { play } from "../lib/sounds";
+import type { Task } from "../lib/types";
 
 export const TaskItem: FC<{ task: Task }> = ({ task }) => {
   const { mutate: updateTask } = useUpdateTask(task.id);

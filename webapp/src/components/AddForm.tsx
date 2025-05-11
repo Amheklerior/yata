@@ -1,11 +1,18 @@
-import { Form } from "radix-ui";
-import { useCreateTask } from "../lib/query";
 import { use, useCallback } from "react";
-import clsx from "clsx";
+import {
+  Root as FormRoot,
+  Field as FormField,
+  Label as FormLabel,
+  Control as FormControl,
+  Message as FormMessage,
+  Submit as FormSubmit,
+} from "@radix-ui/react-form";
+import clsx from "clsx/lite";
 import addSound from "../assets/add-sound.wav";
+import { NotificationCtx } from "../contexts/notificationCtx";
+import { useCreateTask } from "../lib/query";
 import { play } from "../lib/sounds";
 import { Spinner } from "./Spinner";
-import { NotificationCtx } from "../contexts/notificationCtx";
 
 export const AddForm = () => {
   const { mutate: createTask, isPending } = useCreateTask();
@@ -32,11 +39,11 @@ export const AddForm = () => {
   );
 
   return (
-    <Form.Root onSubmit={handleSubmit} className="flex items-start gap-4 p-4">
-      <Form.Field name="title" className="flex grow flex-col gap-2">
-        <Form.Label className="sr-only">title</Form.Label>
+    <FormRoot onSubmit={handleSubmit} className="flex items-start gap-4 p-4">
+      <FormField name="title" className="flex grow flex-col gap-2">
+        <FormLabel className="sr-only">title</FormLabel>
         <div className="flex items-center">
-          <Form.Control
+          <FormControl
             type="text"
             required
             placeholder="Add a new task..."
@@ -58,16 +65,16 @@ export const AddForm = () => {
           </span>
         </div>
         <div className="min-h-6 text-left text-red-400">
-          <Form.Message match="valueMissing">
+          <FormMessage match="valueMissing">
             <small>Are you joking?</small>
-          </Form.Message>
+          </FormMessage>
         </div>
-      </Form.Field>
-      <Form.Submit asChild>
+      </FormField>
+      <FormSubmit asChild>
         <button type="submit" className="sr-only">
           Add
         </button>
-      </Form.Submit>
-    </Form.Root>
+      </FormSubmit>
+    </FormRoot>
   );
 };

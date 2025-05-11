@@ -18,13 +18,13 @@ const EmptyList: FC = () => (
 );
 
 export const TasksList: FC = () => {
-  const { data, isLoading, isSuccess } = useGetTasks();
+  const { data, isLoading, isSuccess, isError } = useGetTasks();
 
   const { notify } = use(NotificationCtx);
 
   useEffect(() => {
-    if (!isSuccess) notify("There was an error loading the tasks");
-  }, [isSuccess, notify]);
+    if (isError) notify("There was an error loading the tasks");
+  }, [isError, notify]);
 
   if (isLoading || !isSuccess) return <Loading />;
 
