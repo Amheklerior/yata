@@ -1,5 +1,4 @@
 import { AddForm } from "./components/AddForm";
-import { Separator } from "./components/Separator";
 import { TasksList } from "./components/TasksList";
 import { Layout } from "./layouts/Layout";
 
@@ -10,7 +9,7 @@ function App() {
         <section id="add-task">
           <AddForm />
         </section>
-        <Separator />
+        <hr className="border-[0.5] border-stone-400/50" />
         <section id="tasks-list">
           <TasksList />
         </section>
