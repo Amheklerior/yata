@@ -57,7 +57,7 @@ export const AddForm = () => {
           />
           <span
             className={clsx(
-              "invisible relative right-9 flex h-1 w-0 items-center",
+              "invisible relative right-9 flex h-1 w-1 items-center",
               isPending && "visible",
             )}
           >
