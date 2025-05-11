@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-roboto: "Roboto", sans-serif;
+  --font-quicksand: "Quicksand", sans-serif;
 }
 
 @layer base {
