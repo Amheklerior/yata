@@ -41,13 +41,13 @@ export const AddForm = () => {
         <Form.Control
           type="text"
           required
-          className={clsx(
-            "grow p-2",
-            "rounded-lg border border-stone-400 caret-amber-200 ring-amber-200",
-            "placeholder:text-stone-400/70",
-            "hover:ring-1 focus:ring-1 focus:ring-amber-200 focus:outline-none",
-          )}
           placeholder="Add a new task..."
+          className={clsx(
+            "grow rounded-lg border p-2",
+            "hover:bg-stone-600/10 focus:bg-stone-600/10",
+            "border-stone-400 caret-amber-200 placeholder:text-stone-400/70",
+            "hover:border-amber-100 hover:ring-0 focus:border-amber-100 focus:ring-0 focus:outline-none",
+          )}
         />
         <div className="min-h-6 text-left text-red-400">
           <Form.Message match="valueMissing">
