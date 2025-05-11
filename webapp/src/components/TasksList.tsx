@@ -19,8 +19,7 @@ export const TasksList: FC = () => {
       {data.total === 0 ? (
         <EmptyList />
       ) : (
-        // TODO: remove scrollbar
-        <ul className="max-h-[420px] overflow-y-auto">
+        <ul className="no-scrollbar max-h-[420px] overflow-y-auto">
           {data.tasks.map((task: Task) => (
             <TaskItem key={task.id} task={task} />
           ))}

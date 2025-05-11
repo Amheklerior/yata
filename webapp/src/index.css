@@ -35,4 +35,14 @@
   .debug {
     @apply border-2 border-red-700;
   }
+
+  /* Hide scrollbar: Firefox */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  /* Hide scrollbar: Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
 }
