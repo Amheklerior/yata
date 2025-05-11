@@ -9,7 +9,7 @@ function App() {
         <section id="add-task">
           <AddForm />
         </section>
-        <hr className="border-[0.5] border-stone-400/50" />
+        <hr className="border-[0.5] border-neutral-400/50" />
         <section id="tasks-list">
           <TasksList />
         </section>

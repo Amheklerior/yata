@@ -27,14 +27,14 @@ export const NotificationCenter = () => {
       <ToastRoot
         open={open}
         onOpenChange={clearNotification}
-        className="flex items-center rounded-lg bg-red-400 px-4 py-3 shadow-lg"
+        className="bg-danger-400 flex items-center rounded-lg px-4 py-3 shadow-lg"
       >
-        <ToastDescription className="text text-red-950">
+        <ToastDescription className="text text-danger-950">
           {message}
         </ToastDescription>
       </ToastRoot>
 
-      <ToastViewport className="fixed right-0 bottom-0 z-[2147483647] m-0 flex w-[390px] max-w-[100vw] list-none flex-col gap-2.5 p-[var(--viewport-padding)] outline-none [--viewport-padding:_25px]" />
+      <ToastViewport className="fixed bottom-0 right-0 z-[2147483647] m-0 flex w-[390px] max-w-[100vw] list-none flex-col gap-2.5 p-[var(--viewport-padding)] outline-none [--viewport-padding:_25px]" />
     </ToastProvider>
   );
 };

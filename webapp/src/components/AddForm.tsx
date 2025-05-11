@@ -47,13 +47,7 @@ export const AddForm = () => {
             type="text"
             required
             placeholder="Add a new task..."
-            className={clsx(
-              "grow rounded-lg border px-3 py-2 placeholder:text-sm placeholder:uppercase",
-              "transition-all duration-300",
-              "hover:bg-stone-600/10 hover:placeholder:text-amber-200/30 focus:bg-stone-600/10 focus:placeholder:text-amber-200/30",
-              "border-stone-400 caret-amber-200 placeholder:text-stone-400/70",
-              "hover:border-amber-100 hover:ring-0 focus:border-amber-100 focus:ring-0 focus:outline-none",
-            )}
+            className="input-field no-ring interactive animated grow"
           />
           <span
             className={clsx(
@@ -64,7 +58,7 @@ export const AddForm = () => {
             <Spinner />
           </span>
         </div>
-        <div className="min-h-6 text-left text-red-400">
+        <div className="text-danger-400 min-h-6 text-left">
           <FormMessage match="valueMissing">
             <small>Are you joking?</small>
           </FormMessage>

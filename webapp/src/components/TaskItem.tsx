@@ -39,7 +39,11 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
 
   return (
     <li className="flex items-center gap-4 p-4">
-      <button onClick={handleUpdateTask} className="status-checkbox">
+      <button
+        onClick={handleUpdateTask}
+        className="status-checkbox interactive animated"
+        data-anim="slow"
+      >
         <span className="sr-only">
           Mark as {isComplete ? "complete" : "to do"}
         </span>
@@ -49,20 +53,19 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
       </button>
       <h3
         className={clsx(
-          "grow text-left transition-colors duration-300",
-          isComplete ? "text-stone-200/50 line-through" : "",
+          "animated grow text-left",
+          isComplete ? "text-neutral-200/50 line-through" : "",
         )}
+        data-anim="slow"
       >
         {task.title}
       </h3>
-      <button onClick={handleDelete} className="hover:cursor-pointer">
-        <img
-          src={closeSvg}
-          alt="Delete task"
-          width={24}
-          height={24}
-          className="close-icon"
-        />
+      <button
+        onClick={handleDelete}
+        className="interactive no-ring close-btn animated"
+        data-anim="slow"
+      >
+        <img src={closeSvg} alt="Delete task" width={24} height={24} />
       </button>
     </li>
   );

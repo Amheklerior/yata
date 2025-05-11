@@ -2,7 +2,45 @@
 @import "tailwindcss";
 
 @theme {
+  /* font-family */
   --font-quicksand: "Quicksand", sans-serif;
+
+  /* color palette */
+  --color-neutral-50: var(--color-stone-50);
+  --color-neutral-100: var(--color-stone-100);
+  --color-neutral-200: var(--color-stone-200);
+  --color-neutral-300: var(--color-stone-300);
+  --color-neutral-400: var(--color-stone-400);
+  --color-neutral-500: var(--color-stone-500);
+  --color-neutral-600: var(--color-stone-600);
+  --color-neutral-700: var(--color-stone-700);
+  --color-neutral-800: var(--color-stone-800);
+  --color-neutral-900: var(--color-stone-900);
+  --color-neutral-950: var(--color-stone-950);
+
+  --color-primary-50: var(--color-amber-50);
+  --color-primary-100: var(--color-amber-100);
+  --color-primary-200: var(--color-amber-200);
+  --color-primary-300: var(--color-amber-300);
+  --color-primary-400: var(--color-amber-400);
+  --color-primary-500: var(--color-amber-500);
+  --color-primary-600: var(--color-amber-600);
+  --color-primary-700: var(--color-amber-700);
+  --color-primary-800: var(--color-amber-800);
+  --color-primary-900: var(--color-amber-900);
+  --color-primary-950: var(--color-amber-950);
+
+  --color-danger-50: var(--color-red-50);
+  --color-danger-100: var(--color-red-100);
+  --color-danger-200: var(--color-red-200);
+  --color-danger-300: var(--color-red-300);
+  --color-danger-400: var(--color-red-400);
+  --color-danger-500: var(--color-red-500);
+  --color-danger-600: var(--color-red-600);
+  --color-danger-700: var(--color-red-700);
+  --color-danger-800: var(--color-red-800);
+  --color-danger-900: var(--color-red-900);
+  --color-danger-950: var(--color-red-950);
 }
 
 @layer base {
@@ -30,25 +68,38 @@
     }
   }
 
+  .input-field {
+    @apply rounded-lg border px-3 py-2 placeholder:text-sm placeholder:uppercase caret-primary-200;
+    @apply placeholder:text-neutral-400/70 hover:placeholder:text-primary-200/30 focus:placeholder:text-primary-200/30;
+    @apply border-neutral-400 hover:border-primary-100 focus:border-primary-100;
+    @apply hover:bg-neutral-600/10 focus:bg-neutral-600/10;
+  }
+
   .status-checkbox {
-    @apply size-5 rounded-full border border-stone-400;
-    @apply hover:cursor-pointer hover:border-amber-200 hover:bg-amber-300/10;
-    @apply flex items-center justify-center transition-all duration-500;
+    @apply flex items-center justify-center;
+    @apply size-5 rounded-full border border-neutral-400 ;
+    @apply hover:border-primary-200 hover:bg-primary-300/10 hover:ring-1 hover:ring-primary-200;
+    @apply focus:border-primary-200 focus:bg-primary-300/10 focus:ring-1 focus:ring-primary-200 focus:outline-none;
 
     & > .inner-circle {
-      @apply size-3 rounded-full border border-amber-200 bg-amber-200 transition-all duration-500;
+      @apply size-3 rounded-full border border-primary-200 bg-primary-200;
     }
   }
 
-  .close-icon {
-    @apply rounded-full border border-transparent bg-transparent hover:bg-red-500/60;
-    @apply rotate-0 transition-all duration-500 hover:rotate-90;
+  .close-btn {
+    @apply rounded-full border-none;
+    @apply bg-transparent hover:bg-danger-500/60 focus:bg-danger-500/60;
+    @apply rotate-0 hover:rotate-90 focus:rotate-90;
   }
+/* 
+  .close-icon {
+    @apply rounded-full border border-transparent;
+  } */
 }
 
 @layer utilities {
   .debug {
-    @apply border-2 border-red-700;
+    @apply border-2 border-danger-700;
   }
 
   .no-scrollbar {
@@ -58,6 +109,22 @@
     /* Hide scrollbar: Chrome, Safari and Opera */
     &::-webkit-scrollbar {
       display: none;
+    }
+  }
+
+  .interactive {
+    @apply hover:cursor-pointer;
+  }
+
+  .no-ring {
+    @apply ring-0 focus:ring-0 focus:outline-none;
+  }
+
+  .animated {
+    @apply transition-all duration-300;
+
+    &[data-anim="slow"] {
+      @apply duration-500;
     }
   }
 }

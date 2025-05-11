@@ -14,7 +14,7 @@ const Loading: FC = () => (
 );
 
 const EmptyList: FC = () => (
-  <p className="text-stone-300">No tasks Yet. Start adding some...</p>
+  <p className="text-neutral-300">No tasks Yet. Start adding some...</p>
 );
 
 export const TasksList: FC = () => {
