@@ -147,7 +147,6 @@ func TestUpdateTaskHandler(t *testing.T) {
 				t.Fatalf("failed to convert id %v", tt.id)
 			}
 
-			// TODO remove the db lookup converting the task list into a map
 			updated, err := testDB.GetById(store.TaskId(id))
 			if err != nil {
 				t.Fatal("failed to get the updated task")

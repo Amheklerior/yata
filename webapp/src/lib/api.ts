@@ -10,8 +10,6 @@ import type {
   UpdateTaskResponse,
 } from "./types";
 
-// TODO: handle all response and error cases
-
 export const getTasks = async (): Promise<GetTasksResponse> => {
   return await HttpClient.get("tasks");
 };

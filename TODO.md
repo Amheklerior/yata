@@ -22,13 +22,16 @@ NOTE. Musts are highlighted in **bold**.
 - [x] **implement the _mark as complete_ functionality**
 - [x] **implement the _delete a task_ functionality**
 - [x] **improve UI (structure / colors / font / styles / ui lib?)**
-- [ ] add some juice (anim / fx / sound)
-- [ ] integrate keybord usage
+- [x] **implement error hanlding**
+- [x] **implement loading states handling**
+- [x] add some juice (anim / fx / sound)
+- [x] integrate keybord usage
 
 ## Quality of Life
 
 - [x] **implement a simple cli for testing the server via terminal**
 - [ ] **dockerize the entire app with Docker Compose**
+- [ ] add a .env file
 - [ ] implement a simple CI/CD pipeline with GitHub Actions
 
 ## Documentation
