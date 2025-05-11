@@ -41,7 +41,7 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
     <li className="flex items-center gap-4 p-4">
       <button
         onClick={handleUpdateTask}
-        className="status-checkbox interactive animated"
+        className="status-checkbox interactive animated min-w-5"
         data-anim="slow"
       >
         <span className="sr-only">
@@ -53,7 +53,7 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
       </button>
       <h3
         className={clsx(
-          "animated grow text-left",
+          "animated max-w-full grow overflow-x-hidden text-left text-nowrap text-ellipsis",
           isComplete ? "text-neutral-200/50 line-through" : "",
         )}
         data-anim="slow"
@@ -62,7 +62,7 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
       </h3>
       <button
         onClick={handleDelete}
-        className="interactive no-ring close-btn animated"
+        className="interactive no-ring close-btn animated min-w-6"
         data-anim="slow"
       >
         <img src={closeSvg} alt="Delete task" width={24} height={24} />
