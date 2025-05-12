@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  yata-server:
+    build: ./server
+    ports:
+      - 8080:8080
+    restart: always
+  yata-webapp:
+    build: ./webapp
+    ports:
+      - 80:80
+    restart: always
+    depends_on:
+      - yata-server
