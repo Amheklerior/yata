@@ -15,7 +15,7 @@ func main() {
 	}
 
 	// TODO: read from a .env file
-	host, port := "localhost", 8080
+	host, port := "0.0.0.0", 8080
 
 	server := &http.Server{
 		Addr:    fmt.Sprintf("%s:%d", host, port),
