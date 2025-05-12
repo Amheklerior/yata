@@ -20,8 +20,7 @@ There's a [`Makefile`](./makefile) to help you run the server in development mod
 
 ```sh
 $ cd ./server
-$ make dev # run the server in development mode
-$ make run # build and run the server from the /dist dir
+$ make dev # run the server locally
 $ make build # build the server into the /dist dir
 $ make fmt # format the code
 $ make test # run the tests
