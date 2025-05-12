@@ -35,13 +35,13 @@ NOTE. Musts are highlighted in **bold**.
 ## Quality of Life
 
 - [x] **implement a simple cli for testing the server via terminal**
-- [ ] **dockerize the entire app with Docker Compose**
+- [x] **dockerize the entire app with Docker Compose**
 - [ ] add a .env file
 - [ ] implement a simple CI/CD pipeline with GitHub Actions
 
 ## Documentation
 
-- [ ] **explain project structure and how to navigate each part**
-- [ ] **highlights assumptions and decisions made**
-- [ ] **explain how to run the project with docker**
-- [ ] explain how to run and build the project
+- [x] **explain project structure and how to navigate each part**
+- [x] **highlights assumptions and decisions made**
+- [x] **explain how to run the project with docker**
+- [x] explain how to run and build the project
