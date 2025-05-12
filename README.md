@@ -2,6 +2,18 @@
 
 This is **YATA** (_Yet Anotehr Todo App_).
 
+## Run the project
+
+To run the project, open the terminal window run the following command:
+
+```sh
+docker compose up
+```
+
+Then you can open the webapp at [http://localhost:80](http://localhost:80).
+
+NOTE. you need to have docker installed on your machine.
+
 ## Assumptions
 
 - freedom in ui/ux desing
