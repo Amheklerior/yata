@@ -28,7 +28,7 @@ NOTE. Musts are highlighted in **bold**.
 - [x] integrate keybord usage
 - [x] reduce bundle size
 - [x] fix text overflow issue on task item
-- [ ] add a paper texture to the background
+- [x] add a paper texture to the background
 - [ ] prevent tab motion to go outside the viewport (focus trap)
 - [ ] add even more juice with transition animations and some particles
 

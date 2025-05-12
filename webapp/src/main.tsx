@@ -13,6 +13,7 @@ createRoot(document.getElementById("root")!).render(
       <NotificationProvider>
         <App />
         <NotificationCenter />
+        <div className="paper-bg" />
       </NotificationProvider>
     </QueryClientProvider>
   </StrictMode>,
