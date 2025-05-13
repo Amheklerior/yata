@@ -48,7 +48,7 @@ local update_task() {
 	shift
 	shift
 	
-	xh PUT $API_URL/$id $@
+	xh PATCH $API_URL/$id $@
 }
 
 local delete_task() {

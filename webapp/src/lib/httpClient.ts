@@ -3,7 +3,7 @@ const BASE_URL = "http://localhost:8080"; // TODO: to get from env
 // TODO: implement a more robust solution
 export class HttpClient {
   public static async request(
-    method: "GET" | "POST" | "PUT" | "DELETE",
+    method: "GET" | "POST" | "PATCH" | "DELETE",
     endpoint: string,
     body?: object,
     customConfig?: RequestInit,
@@ -32,8 +32,8 @@ export class HttpClient {
     });
   }
 
-  public static async put(endpoint: string, body: object) {
-    return await this.request("PUT", endpoint, body, {
+  public static async patch(endpoint: string, body: object) {
+    return await this.request("PATCH", endpoint, body, {
       headers: {
         "Content-Type": "application/json",
       },

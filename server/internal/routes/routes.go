@@ -20,7 +20,7 @@ func SetupRoutes(app *app.Application) *chi.Mux {
 	r.Use(middleware.Timeout(60 * time.Second))
 	r.Use(cors.Handler(cors.Options{
 		AllowedOrigins: []string{"https://*", "http://*"},
-		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedMethods: []string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"},
 		AllowedHeaders: []string{"Accept", "Content-Type"},
 		ExposedHeaders: []string{"Link"},
 	}))
@@ -33,7 +33,7 @@ func SetupRoutes(app *app.Application) *chi.Mux {
 
 		r.Route("/{id}", func(r chi.Router) {
 			r.Get("/", app.TasksHandler.HandleGetTaskById)   // GET /tasks/:id
-			r.Put("/", app.TasksHandler.HandleUpdateTask)    // PUT /tasks/:id
+			r.Patch("/", app.TasksHandler.HandleUpdateTask)  // PATCH /tasks/:id
 			r.Delete("/", app.TasksHandler.HandleDeleteTask) // DELETE /tasks/:id
 		})
 	})

@@ -30,7 +30,7 @@ export const updateTask = async (
   reqBody: UpdateTaskReqBody,
 ): Promise<UpdateTaskResponse> => {
   UpdateTaskReqBodySchema.parse(reqBody);
-  return await HttpClient.put(`tasks/${id}`, reqBody);
+  return await HttpClient.patch(`tasks/${id}`, reqBody);
 };
 
 export const deleteTask = async (id: number): Promise<DeleteTaskResponse> => {
