@@ -29,6 +29,7 @@ NOTE. Musts are highlighted in **bold**.
 - [x] reduce bundle size
 - [x] fix text overflow issue on task item
 - [x] add a paper texture to the background
+- [ ] add a tooltip for very long tasks (or wrap the text)
 - [ ] prevent tab motion to go outside the viewport (focus trap)
 - [ ] add even more juice with transition animations and some particles
 
